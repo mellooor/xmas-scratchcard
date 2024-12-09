@@ -1,0 +1,17 @@
+{
+  "name": "christmas-scratchcard",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "dev-host": "vite --host"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "scratchcard-js": "^1.5.5",
+    "vite": "^6.0.3"
+  }
+}
