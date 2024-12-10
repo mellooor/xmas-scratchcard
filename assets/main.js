@@ -1,28 +1,55 @@
-import 'scratchcard-js';
+const card = document.getElementById("game-1-1");
+const scratchElement = document.getElementById("scratch-pad");
+const canvas = scratchElement.getContext("2d");
 
-const scContainer = document.getElementById('game-1-1');
-const sc = new ScratchCard(scContainer, {
-    scratchType: SCRATCH_TYPE.LINE,
-    containerWidth: scContainer.offsetWidth,
-    containerHeight: 300,
-    imageForwardSrc: '/assets/images/scratchcard.jpg',
-    imageBackgroundSrc: '/assets/images/result.png',
-    htmlBackground: '<p class="text-6xl">⛄<p>',
-    clearZoneRadius: 20,
-    nPoints: 0,
-    pointSize: 0,
-    enabledPercentUpdate: true,
-    percentToFinish: 50, // enabledPercentUpdate must to be true
-    callback: function () {}
+scratchElement.width = card.offsetWidth;
+scratchElement.height = card.offsetHeight;
+
+const gradient = canvas.createLinearGradient(0, 0, scratchElement.width, scratchElement.height);
+gradient.addColorStop(0, "#DFBD69");
+gradient.addColorStop(1, "#926F34");
+
+canvas.fillStyle = gradient;
+canvas.fillRect(0, 0, scratchElement.width, scratchElement.height);
+
+scratchElement.addEventListener("mousedown", (event) => {
+  const onMouseMove = (event) => {
+    scratch(event);
+  }
+
+  const onMouseUp = () => {    
+    scratchElement.removeEventListener('mousemove', onMouseMove);
+    scratchElement.removeEventListener('mouseup', onMouseUp);
+};
+
+  scratchElement.addEventListener("mousemove", onMouseMove);
+  scratchElement.addEventListener('mouseup', onMouseUp);
 });
 
-sc.init().then(() => {
-  sc.canvas.style.position = 'absolute';
-  sc.canvas.style.top = 0;
-  sc.canvas.style.left = 0;
-  sc.canvas.style.width = '100%';
-  sc.canvas.style.height = '100%';
-  document.getElementById('game-1-1').appendChild(sc.canvas);
-}).catch(error => {
-  console.error(error);
+scratchElement.addEventListener("touchstart", (event) => {
+  e.preventDefault();
+  
+  const onTouchMove = (event) => {
+    scratch(event.touches[0]);
+  }
+
+  const onTouchEnd = () => {    
+    scratchElement.removeEventListener('touchmove', onTouchMove);
+    scratchElement.removeEventListener('touchend', onTouchEnd);
+};
+
+  scratchElement.addEventListener("touchmove", onTouchMove);
+  scratchElement.addEventListener('touchend', onTouchEnd);
 });
+
+function scratch(event) {
+  const rect = scratchElement.getBoundingClientRect();
+
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  canvas.globalCompositeOperation = "destination-out";
+  canvas.beginPath();
+  canvas.arc(x, y, 40, 0, Math.PI * 2, false);
+  canvas.fill();
+}
