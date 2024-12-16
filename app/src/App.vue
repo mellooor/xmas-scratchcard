@@ -19,11 +19,11 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      window.addEventListener('load', this.foo);
+      window.addEventListener('load', this.addScratchCovers);
     });
   },
   methods: {
-    foo() {
+    addScratchCovers() {
       const scratchBlocks = this.$el.querySelectorAll(".scratch-block");
 
       scratchBlocks.forEach((scratchBlock) => {
