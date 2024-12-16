@@ -19,6 +19,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
+      screen.orientation.addEventListener('change', this.addScratchCovers);
       window.addEventListener('load', this.addScratchCovers);
     });
   },
