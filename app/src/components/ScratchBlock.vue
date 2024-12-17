@@ -9,9 +9,9 @@
       <component :is="contents.content" />
     </div>
     <div v-else class="position: absolute top-50 left-50">
-      <span class="text-black text-3xl">
+      <p class="text-black text-md text-center">
         {{ contents?.content }}
-      </span>
+      </p>
     </div> 
   </div>
 </template>
