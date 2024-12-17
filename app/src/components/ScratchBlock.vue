@@ -1,15 +1,38 @@
 <template>
   <div class="scratch-block bg-white position: relative flex justify-center items-center">
     <canvas
-      class="position-absolute top-0 start-0"
+      class="z-10"
       @mousedown="mouseScratch"
       @touchstart.prevent="touchScratch"
     ></canvas>
+    <div v-if="contents?.type === 'component'" class="position: absolute h-full w-full">
+      <component :is="contents.content" />
+    </div>
+    <div v-else class="position: absolute top-50 left-50">
+      <p class="text-black text-md text-center">
+        {{ contents?.content }}
+      </p>
+    </div> 
   </div>
 </template>
 
 <script>
+import Santa from './Santa.vue';
+import Snowman from './Snowman.vue';
+import Tree from './Tree.vue';
+
 export default {
+  components: {
+    Santa,
+    Snowman,
+    Tree
+  },
+  props: {
+    contents: {
+      type: String,
+      required: true,
+    },
+  },
   methods: {
     mouseScratch(event) {
       const onMouseMove = (event) => {
